@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>插件检测</title>
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+</head>
+<style>
+    .slider {
+        color: green;
+        font-size: 20px;
+        font-weight: 900;
+    }
+    .main {
+        display: flex;
+        flex: 1;
+        justify-content: center;
+        align-items: center;
+    }
+    .main_content {
+        width: 100%;
+        height:200px;
+        background: gainsboro;
+        overflow: hidden;
+    }
+    .main_content ul {
+        display: flex;
+
+        /*flex-direction: column;*/
+        justify-content: space-around;
+        align-items: left;
+        list-style: none;
+        padding: 10px;
+    }
+    .main_content ul li {
+        width: 25%;
+        height: 30px;
+        margin: 10px;
+        /*flex:1;*/
+        border-radius: 6px;
+        border: 1px solid darkgreen;
+        line-height: 30px;
+        text-align: center;
+    }
+    .bg {
+        background: red;
+    }
+</style>
+<body>
+  <div class="main">
+     <div class="main_content">
+            <ul>
+                <li>1</li>
+                <li>2</li>
+                <li>3</li>
+
+                <li>4</li>
+
+            </ul>
+         <div id="abb">这是测试的文字 </div>
+     </div>
+
+  </div>
+<script>
+   const _ = {
+       //判断是否有class
+       hasClass(el,className) {
+           let reg = new RegExp(`(^|\\$)${className}(\\s|$)`);
+           return reg.test(el.className)
+       },
+       //添加class
+       addClass(el,className) {
+           if (this.hasClass(el,className)) return;
+           let newClass = el.className.split('');
+           newClass.push(className);
+           el.className = newClass.join(' ')
+       },
+       //删除class
+       removeClass(el,className) {
+            if(this.hasClass(el, className)) {
+                //方法一：
+                let reg = new RegExp(`(^|\\$)${className}(\\s|$)`);
+               el.className = el.className.replace(reg, '');
+               //方法二：
+//               el.setAttribute('class','')
+           }
+       },
+       //给传入的参数（数组 或者对象）添加样式
+       addStyle(LisArray,className) {
+           let _this_ = this ;
+           for (let i=0; i<LisArray.length;i++){
+               LisArray[i].onclick = function () {
+                   if ( _this_.hasClass(LisArray[i],className)) {
+                       for ( let j=0;j < LisArray.length; j++){
+                           _this_.removeClass(LisArray[i],className);
+                       }
+                   }else{
+                       _this_.addClass( LisArray[i],className)
+                   }
+               }
+           }
+       },
+       //获取id的标签名
+       $(id) {
+           return document.getElementById(id)
+       }
+   }
+    _.addClass(_.$('abb'),'slider');
+   let lisArray = document.getElementsByTagName('li');
+   let caclute = _.addStyle(lisArray,'bg');
+   console.log(lisArray);
+   console.log(caclute);
+
+</script>
+
+</body>
+</html>
