@@ -89,13 +89,12 @@
        addStyle(LisArray,className) {
            let _this_ = this ;
            for (let i=0; i<LisArray.length;i++){
+//               LisArray[i].style.backgroundColor = '';
                LisArray[i].onclick = function () {
-                   if ( _this_.hasClass(LisArray[i],className)) {
-                       for ( let j=0;j < LisArray.length; j++){
-                           _this_.removeClass(LisArray[i],className);
-                       }
+                   if ( !(_this_.hasClass(LisArray[i],className))) {
+                       _this_.addClass(LisArray[i],className)
                    }else{
-                       _this_.addClass( LisArray[i],className)
+                      _this_.removeClass(LisArray[i],className);
                    }
                }
            }
