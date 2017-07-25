@@ -5,6 +5,7 @@
     <title>插件检测</title>
     <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
 </head>
+<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-default/index.css">
 <style>
     .slider {
         color: green;
@@ -19,7 +20,7 @@
     }
     .main_content {
         width: 100%;
-        height:200px;
+        height:300px;
         background: gainsboro;
         overflow: hidden;
     }
@@ -47,19 +48,21 @@
     }
 </style>
 <body>
+
   <div class="main">
-     <div class="main_content">
-            <ul>
-                <li>1</li>
-                <li>2</li>
-                <li>3</li>
+     <!--<div class="main_content">-->
+            <!--<ul>-->
+                <!--<li>1</li>-->
+                <!--<li>2</li>-->
+                <!--<li>3</li>-->
 
-                <li>4</li>
+                <!--<li>4</li>-->
 
-            </ul>
-         <div id="abb">这是测试的文字 </div>
-     </div>
-
+            <!--</ul>-->
+         <!--<div id="abb">这是测试的文字 </div>-->
+         <div id="wrap"></div>
+     <!--</div>-->
+<div class="domClass"></div>
   </div>
 <script>
    const _ = {
@@ -89,7 +92,6 @@
        addStyle(LisArray,className) {
            let _this_ = this ;
            for (let i=0; i<LisArray.length;i++){
-//               LisArray[i].style.backgroundColor = '';
                LisArray[i].onclick = function () {
                    if ( !(_this_.hasClass(LisArray[i],className))) {
                        _this_.addClass(LisArray[i],className)
@@ -99,17 +101,101 @@
                }
            }
        },
+       //元素获取
+       $DOM(selector,context) {
+            context = context || document ;
+            if (selector.indexOf(" ") !== -1) {
+                return context.querySelectorAll(selector)
+            }else if (selector.charAt(0) === '#') {//如果字符串的第一个是# 则直接返回数组的第二个参数，即是 [1]
+                return document.getElementById(selector.slice(1))
+            }else if (selector.charAt(0) === '.') {
+                return context.getElementsByClassName(selector.slice(1))
+            }else {
+                return context.getElementsByTagName(selector)
+            }
+       },
        //获取id的标签名
        $(id) {
            return document.getElementById(id)
-       }
-   }
-    _.addClass(_.$('abb'),'slider');
-   let lisArray = document.getElementsByTagName('li');
-   let caclute = _.addStyle(lisArray,'bg');
-   console.log(lisArray);
-   console.log(caclute);
+       },
+       //树形组件
+       _initTree(num,obj){
+           let tier = 0;
+//           let paramTree = Object.create(null);
+           let {name,age,area,id} =obj;
+            let ul = document.createElement('ul');
+           this.$('wrap').appendChild(ul);
+            if (typeof  obj.length === 'number') {
+//                alert(obj.length)
+                for (let i=0; i< obj.length; i++) {
+                    let li = document.createElement('li');
+                    li.setAttribute('tier', num);
+                    li.innerHTML = `<i>+</i>${obj[i].name}`;
+                    ul.appendChild(li);
+                    let ck = document.createElement('input');
+                    ck.setAttribute('type','radio');
+                    ck.setAttribute('style','display:inline-block');
+                    ck.setAttribute('name','area');
+                    li.appendChild(ck);
 
+                    ck.onchange = function (e) {
+//                        alert(e)
+                    }
+                    let lb = document.createElement('label');
+                    lb.setAttribute('class', 'label-check');
+//                    lb.setAttribute('for', id + obj[i][mark]);
+                    li.appendChild(lb);
+//                    li.style['padding-left'] = num * 5 + 'px';
+                }
+
+            }
+            return ul;
+
+       },
+
+   }
+   let objTree =[
+       {
+           id:'1',
+           name:'成都',
+           city:'四川',
+           area:[{
+               location:'中国1',
+               circle:'亚洲1'
+           }]
+       },
+       {
+           id:'2',
+           name:'上海',
+           city:'上海',
+           area:[{
+               location:'中国2',
+               circle:'亚洲2'
+           }]
+       }, {
+           id:'3',
+           name:'北京',
+           city:'北京',
+           area:[{
+               location:'中国3',
+               circle:'亚洲3'
+           }]
+       },
+   ]
+
+//    _.addClass(_.$('abb'),'slider');
+   let tree= _._initTree(3,objTree)
+//   let lisArray = document.getElementsByTagName('li');
+//   let caclute = _.addStyle(lisArray,'bg');
+//   console.log(lisArray);
+//   console.log(caclute);
+   console.log('tree');
+   console.log(tree);
+   console.log(objTree);
+
+   let domClass = _.$DOM('.domClass')
+   console.log(domClass);
+//   console.log(_.$DOM());
 </script>
 
 </body>
