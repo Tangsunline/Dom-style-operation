@@ -120,7 +120,7 @@
        },
        //树形组件
        _initTree(num,obj){
-           let tier = 0;
+           let pID ;
 //           let paramTree = Object.create(null);
            let {name,age,area,id} =obj;
             let ul = document.createElement('ul');
@@ -129,8 +129,12 @@
 //                alert(obj.length)
                 for (let i=0; i< obj.length; i++) {
                     let li = document.createElement('li');
-                    li.setAttribute('tier', num);
+                    li.setAttribute('pID', num);
                     li.innerHTML = `<i>+</i>${obj[i].name}`;
+
+                    if (obj.id === pID) {
+
+                    }
                     ul.appendChild(li);
                     let ck = document.createElement('input');
                     ck.setAttribute('type','radio');
@@ -138,13 +142,13 @@
                     ck.setAttribute('name','area');
                     li.appendChild(ck);
 
-                    ck.onchange = function (e) {
-//                        alert(e)
+                    ck.onclick = function (e) {
+                        alert(e)
                     }
-                    let lb = document.createElement('label');
-                    lb.setAttribute('class', 'label-check');
+//                    let lb = document.createElement('label');
+//                    lb.setAttribute('class', 'label-check');
 //                    lb.setAttribute('for', id + obj[i][mark]);
-                    li.appendChild(lb);
+//                    li.appendChild(lb);
 //                    li.style['padding-left'] = num * 5 + 'px';
                 }
 
