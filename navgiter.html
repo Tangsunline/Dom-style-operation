@@ -121,35 +121,34 @@
        //树形组件
        _initTree(num,obj){
            let pID ;
-//           let paramTree = Object.create(null);
            let {name,age,area,id} =obj;
             let ul = document.createElement('ul');
            this.$('wrap').appendChild(ul);
             if (typeof  obj.length === 'number') {
-//                alert(obj.length)
+
                 for (let i=0; i< obj.length; i++) {
                     let li = document.createElement('li');
                     li.setAttribute('pID', num);
-                    li.innerHTML = `<i>+</i>${obj[i].name}`;
-
-                    if (obj.id === pID) {
-
-                    }
+                    li.innerHTML = `<i></i>${obj[i].city}`;
                     ul.appendChild(li);
                     let ck = document.createElement('input');
                     ck.setAttribute('type','radio');
                     ck.setAttribute('style','display:inline-block');
                     ck.setAttribute('name','area');
                     li.appendChild(ck);
+                        ck.onclick = function (e) {
+                            e.stopPropagation();
+//                                console.log(e.target)
+                                let lis = document.createElement('li');
+                            console.log(lis);
+                            li.append(lis)
+                                lis.setAttribute('style','margin-left:20px')
+                                lis.innerHTML= `<i></i>${obj[i].name}`
+//                            e.target.nextSibling.style = 'block' ? 'block' : 'none'
+//                            console.log(e.target.nextSibling);
+                        }
 
-                    ck.onclick = function (e) {
-                        alert(e)
-                    }
-//                    let lb = document.createElement('label');
-//                    lb.setAttribute('class', 'label-check');
-//                    lb.setAttribute('for', id + obj[i][mark]);
-//                    li.appendChild(lb);
-//                    li.style['padding-left'] = num * 5 + 'px';
+
                 }
 
             }
